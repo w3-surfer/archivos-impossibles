@@ -13,7 +13,7 @@ Um projeto em homenagem a Jorge Mourão, desenvolvido com Next.js, TypeScript e 
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/archivos-impossibles.git
+git clone https://github.com/w3-surfer/archivos-impossibles.git
 ```
 
 2. Instale as dependências:
