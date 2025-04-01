@@ -22,6 +22,36 @@ const Timeline = () => {
           </div>
         </div>
 
+        {/* Eventos */}
+        <div className="space-y-20">
+          {/* 1977 */}
+          <div className="relative">
+            <div className="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2" />
+            <div className="ml-auto w-1/2 pl-8">
+              <div className="text-red-500 font-bold">1977</div>
+              <div className="text-gray-400">Produção do filme Costumes da Casa, em película Super-8</div>
+            </div>
+          </div>
+
+          {/* 1978 */}
+          <div className="relative">
+            <div className="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2" />
+            <div className="ml-auto w-1/2 pl-8">
+              <div className="text-red-500 font-bold">1978</div>
+              <div className="text-gray-400">Ator em A Lira do Delírio de Walter Lima Jr.</div>
+            </div>
+          </div>
+
+          {/* 1983 */}
+          <div className="relative">
+            <div className="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2" />
+            <div className="ml-auto w-1/2 pl-8">
+              <div className="text-red-500 font-bold">1983</div>
+              <div className="text-gray-400">Ator em Rio Babilônia de Neville de Almeida</div>
+            </div>
+          </div>
+        </div>
+
         {/* Espaço para eventos futuros */}
         <div className="h-96" />
 
