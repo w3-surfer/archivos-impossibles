@@ -1,18 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-    to bottom,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-family: 'Special Elite', cursive;
+}
+
+@layer base {
+  html {
+    font-family: 'Special Elite', cursive;
+  }
+}
+
+@layer components {
+  .font-typewriter {
+    font-family: 'Special Elite', cursive;
+  }
+}
+
+/* Animações para o modal */
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.modal-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-exit-active {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}
+
+/* Estilos da barra de rolagem */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ef4444; /* Vermelho do Tailwind */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #dc2626; /* Vermelho mais escuro no hover */
+}
+
+/* Para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ef4444 #f1f1f1;
 } 
