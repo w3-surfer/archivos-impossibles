@@ -166,128 +166,143 @@ const Timeline = () => {
   const uniqueYears = Array.from(new Set(events.map(event => event.year))).sort((a, b) => a - b);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto py-20 min-h-screen pt-40">
-      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-800 transform -translate-x-1/2"></div>
-      
-      {uniqueYears.map((year, index) => {
-        const yearEvents = events.filter(event => event.year === year);
-        return (
-          <div key={year} className="relative mb-16">
-            <div className="flex items-center">
+    <div className="relative w-full max-w-4xl mx-auto py-20 min-h-screen pt-40 px-4 sm:px-0">
+      <div className="relative">
+        {/* Linha central */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-800 transform -translate-x-1/2"></div>
+
+        {/* Pontos e anos */}
+        {uniqueYears.map((year, index) => (
+          <div key={year} className="relative mb-32 sm:mb-40">
+            {/* Ponto central */}
+            <div className="absolute left-1/2 top-0 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 hover:bg-white transition-colors duration-200"></div>
+
+            {/* Ano à esquerda ou direita */}
+            <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-8rem)] sm:left-[calc(50%-12rem)]' : 'left-[calc(50%+8rem)] sm:left-[calc(50%+12rem)]'}`}>
               <div 
-                className="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 cursor-pointer hover:bg-white transition-colors duration-200"
+                className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter"
                 onClick={() => handleYearClick(year)}
-              />
-              <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-12rem)]' : 'left-[calc(50%+12rem)]'}`}>
-                <div 
-                  className="text-red-500 font-bold text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter"
-                  onClick={() => handleYearClick(year)}
-                >
-                  {year}
-                </div>
+              >
+                {year}
               </div>
             </div>
           </div>
-        );
-      })}
+        ))}
+      </div>
 
-      {selectedYear && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <div className="flex justify-between items-start mb-6">
-              <h2 className="text-3xl font-bold text-red-500 font-typewriter">{selectedYear}</h2>
-              <button 
-                onClick={closeModal}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="space-y-4">
-              {events
-                .filter(event => event.year === selectedYear)
-                .map((event, index) => {
-                  const yearEvents = events.filter(e => e.year === selectedYear);
-                  const isSingleEvent = yearEvents.length === 1;
-                  
-                  return (
-                    <div 
-                      key={index} 
-                      className={`border-b border-gray-200 pb-4 last:border-0 cursor-pointer hover:bg-gray-50 p-4 rounded-lg transition-colors duration-200 ${
-                        selectedEvent?.title === event.title ? 'bg-gray-50' : ''
-                      }`}
-                      onClick={() => !isSingleEvent && handleEventClick(event)}
-                    >
-                      <div className="flex gap-8">
-                        <div className="flex-1 flex flex-col">
-                          <div>
-                            <h3 className="text-xl font-bold text-black mb-2 whitespace-pre-line">{event.title}</h3>
-                            {(isSingleEvent || selectedEvent?.title === event.title) && (
-                              <>
-                                <p className="text-black">{event.description}</p>
-                                {(event.title.includes('MACONHA EM DEBATE') || 
-                                  event.title.includes('BRAZILIAN CONNECTION') || 
-                                  event.title.includes('TRAGÉDIA NA SEITA DO DAIME')) && (
-                                  <div className="mt-4 flex justify-center">
-                                    <button 
-                                      onClick={() => handleButtonClick('book')}
-                                      className="px-6 py-2 bg-green-500 text-black hover:bg-green-600 hover:text-white transition-colors duration-200 rounded-md font-bold"
-                                    >
-                                      COMPRAR LIVRO
-                                    </button>
-                                  </div>
-                                )}
-                                {(event.title.includes('Rio Babilônia') || 
-                                  event.title.includes('Shave & Send') || 
-                                  event.title.includes('Costumes da Casa') || 
-                                  event.title.includes('Brasil 1.872.000 Minutos') || 
-                                  event.title.includes('A Pátria') || 
-                                  event.title.includes('A Lira do Delírio')) && (
-                                  <div className="mt-4 flex justify-center">
-                                    <button 
-                                      onClick={() => handleButtonClick('movie')}
-                                      className="px-6 py-2 bg-green-500 text-black hover:bg-green-600 hover:text-white transition-colors duration-200 rounded-md font-bold"
-                                    >
-                                      ASSISTIR FILME
-                                    </button>
-                                  </div>
-                                )}
-                              </>
-                            )}
+      {/* Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={closeModal}
+        >
+          <div 
+            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 sm:p-8">
+              <div className="flex justify-between items-start mb-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-black w-full text-center">{selectedYear}</h2>
+                <button 
+                  onClick={closeModal}
+                  className="text-gray-500 hover:text-gray-700 absolute right-4 top-0"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="space-y-4">
+                {events
+                  .filter(event => event.year === selectedYear)
+                  .map((event, index) => {
+                    const yearEvents = events.filter(e => e.year === selectedYear);
+                    const isSingleEvent = yearEvents.length === 1;
+                    
+                    return (
+                      <div 
+                        key={index} 
+                        className={`border-b border-gray-200 pb-4 last:border-0 cursor-pointer hover:bg-gray-50 p-2 sm:p-4 rounded-lg transition-colors duration-200 ${
+                          selectedEvent?.title === event.title ? 'bg-gray-50' : ''
+                        }`}
+                        onClick={() => !isSingleEvent && handleEventClick(event)}
+                      >
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+                          <div className="flex-1 flex flex-col">
+                            <div>
+                              <h3 className="text-lg sm:text-xl font-bold text-black mb-2 whitespace-pre-line">{event.title}</h3>
+                              {(isSingleEvent || selectedEvent?.title === event.title) && (
+                                <>
+                                  <p className="text-sm sm:text-base text-black">{event.description}</p>
+                                  {(event.title.includes('MACONHA EM DEBATE') || 
+                                    event.title.includes('BRAZILIAN CONNECTION') || 
+                                    event.title.includes('TRAGÉDIA NA SEITA DO DAIME')) && (
+                                    <div className="mt-4 flex justify-center">
+                                      <button 
+                                        onClick={() => handleButtonClick('book')}
+                                        className="px-4 sm:px-6 py-2 bg-green-500 text-black hover:bg-green-600 hover:text-white transition-colors duration-200 rounded-md font-bold text-sm sm:text-base"
+                                      >
+                                        COMPRAR LIVRO
+                                      </button>
+                                    </div>
+                                  )}
+                                  {(event.title.includes('Rio Babilônia') || 
+                                    event.title.includes('Shave & Send') || 
+                                    event.title.includes('Costumes da Casa') || 
+                                    event.title.includes('Brasil 1.872.000 Minutos') || 
+                                    event.title.includes('A Pátria') || 
+                                    event.title.includes('A Lira do Delírio')) && (
+                                    <div className="mt-4 flex justify-center">
+                                      <button 
+                                        onClick={() => handleButtonClick('movie')}
+                                        className="px-4 sm:px-6 py-2 bg-green-500 text-black hover:bg-green-600 hover:text-white transition-colors duration-200 rounded-md font-bold text-sm sm:text-base"
+                                      >
+                                        ASSISTIR FILME
+                                      </button>
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                            </div>
                           </div>
+                          {(isSingleEvent || selectedEvent?.title === event.title) && event.media && event.media.map((media, mediaIndex) => (
+                            <div key={mediaIndex} className="w-full sm:w-1/2">
+                              {media.type === 'image' && (
+                                <img 
+                                  src={media.url} 
+                                  alt={event.title}
+                                  className="w-full h-auto rounded-lg shadow-lg object-contain"
+                                  onError={(e) => {
+                                    console.error('Erro ao carregar imagem:', media.url);
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                  loading="lazy"
+                                />
+                              )}
+                            </div>
+                          ))}
                         </div>
-                        {(isSingleEvent || selectedEvent?.title === event.title) && event.media && event.media.map((media, mediaIndex) => (
-                          <div key={mediaIndex} className="w-1/2">
-                            {media.type === 'image' && (
-                              <img 
-                                src={media.url} 
-                                alt={event.title}
-                                className="w-full h-auto rounded-lg shadow-lg object-contain"
-                                onError={(e) => {
-                                  console.error('Erro ao carregar imagem:', media.url);
-                                  e.currentTarget.style.display = 'none';
-                                }}
-                                loading="lazy"
-                              />
-                            )}
-                          </div>
-                        ))}
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
             </div>
           </div>
         </div>
       )}
 
+      {/* Popup */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={closePopup}
+        >
+          <div 
+            className="bg-white p-4 sm:p-8 rounded-lg max-w-md w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-start mb-6">
-              <h2 className="text-xl font-bold text-red-500">{popupMessage}</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-red-500">{popupMessage}</h2>
               <button 
                 onClick={closePopup}
                 className="text-gray-500 hover:text-gray-700"
@@ -300,7 +315,7 @@ const Timeline = () => {
             <div className="flex justify-center">
               <button 
                 onClick={closePopup}
-                className="px-6 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors duration-200 rounded-md font-bold"
+                className="px-4 sm:px-6 py-2 bg-red-500 text-white hover:bg-red-600 transition-colors duration-200 rounded-md font-bold text-sm sm:text-base"
               >
                 FECHAR
               </button>
