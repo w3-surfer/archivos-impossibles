@@ -169,36 +169,38 @@ const Timeline = () => {
     <div className="relative w-full max-w-4xl mx-auto py-12 sm:py-20 min-h-screen pt-32 sm:pt-40 px-4 sm:px-0">
       <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-800 transform -translate-x-1/2"></div>
 
-      {uniqueYears.map((year, index) => {
-        const yearEvents = events.filter(event => event.year === year);
-        return (
-          <div key={year} className="relative mb-8 sm:mb-16">
-            <div className="flex items-center">
-              <div className="absolute left-1/2 transform -translate-x-1/2">
-                <div 
-                  className={`absolute top-[0.5rem] h-0.5 bg-gray-800 ${
-                    index % 2 === 0 
-                      ? 'right-0 w-[4rem] sm:w-[6rem]' 
-                      : 'left-0 w-[4rem] sm:w-[6rem]'
-                  }`}
-                />
-                <div 
-                  className="w-4 h-4 bg-red-500 rounded-full cursor-pointer hover:bg-white transition-colors duration-200 relative z-10"
-                  onClick={() => handleYearClick(year)}
-                />
-              </div>
-              <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-6rem)] sm:left-[calc(50%-8rem)]' : 'left-[calc(50%+2rem)] sm:left-[calc(50%+4rem)]'}`}>
-                <div 
-                  className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter text-center"
-                  onClick={() => handleYearClick(year)}
-                >
-                  {year}
+      <div className="flex flex-col space-y-8 sm:space-y-16">
+        {uniqueYears.map((year, index) => {
+          const yearEvents = events.filter(event => event.year === year);
+          return (
+            <div key={year} className="relative">
+              <div className="flex items-center">
+                <div className="absolute left-1/2 transform -translate-x-1/2">
+                  <div 
+                    className={`absolute top-[0.5rem] h-0.5 bg-gray-800 ${
+                      index % 2 === 0 
+                        ? 'right-0 w-[4rem] sm:w-[6rem]' 
+                        : 'left-0 w-[4rem] sm:w-[6rem]'
+                    }`}
+                  />
+                  <div 
+                    className="w-4 h-4 bg-red-500 rounded-full cursor-pointer hover:bg-white transition-colors duration-200 relative z-10"
+                    onClick={() => handleYearClick(year)}
+                  />
+                </div>
+                <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-6rem)] sm:left-[calc(50%-8rem)]' : 'left-[calc(50%+2rem)] sm:left-[calc(50%+4rem)]'}`}>
+                  <div 
+                    className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter text-center"
+                    onClick={() => handleYearClick(year)}
+                  >
+                    {year}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
 
       {selectedYear && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
