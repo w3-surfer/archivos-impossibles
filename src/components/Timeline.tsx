@@ -167,42 +167,36 @@ const Timeline = () => {
 
   return (
     <div className="relative w-full max-w-4xl mx-auto py-20 min-h-screen pt-40 px-4 sm:px-0">
-      <div className="relative">
-        {/* Linha central */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-800 transform -translate-x-1/2"></div>
+      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-800 transform -translate-x-1/2"></div>
 
-        {/* Pontos e anos */}
-        {uniqueYears.map((year, index) => (
-          <div key={year} className="relative mb-32 sm:mb-40">
-            {/* Ponto central */}
-            <div className="absolute left-1/2 top-0 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 hover:bg-white transition-colors duration-200"></div>
-
-            {/* Ano à esquerda ou direita */}
-            <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-8rem)] sm:left-[calc(50%-12rem)]' : 'left-[calc(50%+8rem)] sm:left-[calc(50%+12rem)]'}`}>
+      {uniqueYears.map((year, index) => {
+        const yearEvents = events.filter(event => event.year === year);
+        return (
+          <div key={year} className="relative mb-16">
+            <div className="flex items-center">
               <div 
-                className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter"
+                className="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 cursor-pointer hover:bg-white transition-colors duration-200"
                 onClick={() => handleYearClick(year)}
-              >
-                {year}
+              />
+              <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-8rem)] sm:left-[calc(50%-12rem)]' : 'left-[calc(50%+8rem)] sm:left-[calc(50%+12rem)]'}`}>
+                <div 
+                  className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter"
+                  onClick={() => handleYearClick(year)}
+                >
+                  {year}
+                </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={closeModal}
-        >
-          <div 
-            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
+      {selectedYear && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-4 sm:p-8">
               <div className="flex justify-between items-start mb-6">
-                <h2 className="text-xl sm:text-2xl font-bold text-black w-full text-center">{selectedYear}</h2>
+                <h2 className="text-2xl sm:text-3xl font-bold text-red-500 font-typewriter w-full text-center">{selectedYear}</h2>
                 <button 
                   onClick={closeModal}
                   className="text-gray-500 hover:text-gray-700 absolute right-4 top-0"
@@ -291,21 +285,14 @@ const Timeline = () => {
         </div>
       )}
 
-      {/* Popup */}
       {showPopup && (
-        <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={closePopup}
-        >
-          <div 
-            className="bg-white p-4 sm:p-8 rounded-lg max-w-md w-full mx-4"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-4 sm:p-8 rounded-lg max-w-md w-full mx-4">
             <div className="flex justify-between items-start mb-6">
-              <h2 className="text-lg sm:text-xl font-bold text-red-500">{popupMessage}</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-red-500 text-center w-full">{popupMessage}</h2>
               <button 
                 onClick={closePopup}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 absolute right-4 top-0"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
