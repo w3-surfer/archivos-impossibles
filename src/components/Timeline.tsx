@@ -174,13 +174,22 @@ const Timeline = () => {
         return (
           <div key={year} className="relative mb-16">
             <div className="flex items-center">
-              <div 
-                className="absolute left-1/2 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 cursor-pointer hover:bg-white transition-colors duration-200"
-                onClick={() => handleYearClick(year)}
-              />
-              <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-8rem)] sm:left-[calc(50%-12rem)]' : 'left-[calc(50%+8rem)] sm:left-[calc(50%+12rem)]'}`}>
+              <div className="absolute left-1/2 transform -translate-x-1/2">
                 <div 
-                  className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter"
+                  className={`absolute top-[0.5rem] h-0.5 bg-gray-800 ${
+                    index % 2 === 0 
+                      ? 'right-0 w-[4rem] sm:w-[6rem]' 
+                      : 'left-0 w-[4rem] sm:w-[6rem]'
+                  }`}
+                />
+                <div 
+                  className="w-4 h-4 bg-red-500 rounded-full cursor-pointer hover:bg-white transition-colors duration-200 relative z-10"
+                  onClick={() => handleYearClick(year)}
+                />
+              </div>
+              <div className={`absolute ${index % 2 === 0 ? 'left-[calc(50%-6rem)] sm:left-[calc(50%-8rem)]' : 'left-[calc(50%+2rem)] sm:left-[calc(50%+4rem)]'}`}>
+                <div 
+                  className="text-red-500 font-bold text-xl sm:text-2xl cursor-pointer hover:text-white transition-colors duration-200 font-typewriter text-center"
                   onClick={() => handleYearClick(year)}
                 >
                   {year}
@@ -193,13 +202,13 @@ const Timeline = () => {
 
       {selectedYear && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto m-4">
             <div className="p-4 sm:p-8">
               <div className="flex justify-between items-start mb-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-red-500 font-typewriter w-full text-center">{selectedYear}</h2>
                 <button 
                   onClick={closeModal}
-                  className="text-gray-500 hover:text-gray-700 absolute right-4 top-0"
+                  className="text-gray-500 hover:text-gray-700 absolute right-4 top-4"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
