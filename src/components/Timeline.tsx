@@ -203,8 +203,15 @@ const Timeline = () => {
       </div>
 
       {selectedYear && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto m-4">
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              closeModal();
+            }
+          }}
+        >
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto m-4 relative">
             <div className="p-4 sm:p-8">
               <div className="flex justify-between items-start mb-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-red-500 font-typewriter w-full text-center">{selectedYear}</h2>
