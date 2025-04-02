@@ -166,13 +166,13 @@ const Timeline = () => {
   const uniqueYears = Array.from(new Set(events.map(event => event.year))).sort((a, b) => a - b);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto py-20 min-h-screen pt-40 px-4 sm:px-0">
+    <div className="relative w-full max-w-4xl mx-auto py-12 sm:py-20 min-h-screen pt-32 sm:pt-40 px-4 sm:px-0">
       <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-800 transform -translate-x-1/2"></div>
 
       {uniqueYears.map((year, index) => {
         const yearEvents = events.filter(event => event.year === year);
         return (
-          <div key={year} className="relative mb-16">
+          <div key={year} className="relative mb-8 sm:mb-16">
             <div className="flex items-center">
               <div className="absolute left-1/2 transform -translate-x-1/2">
                 <div 
